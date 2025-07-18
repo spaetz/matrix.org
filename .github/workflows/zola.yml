@@ -10,17 +10,16 @@ on:
 jobs:
   deploy:
     name: Build the site
-    runs-on: ubuntu-latest
+    image: alpine:latest
+    #runs-on: ubuntu-latest
     steps:
       - name: Repository checkout
         uses: actions/checkout@v4
 
       - name: Download Zola
         run: |
-          version='v0.20.0'
-          archive="zola-${version}-x86_64-unknown-linux-gnu.tar.gz"
-          curl -L "https://github.com/getzola/zola/releases/download/${version}/${archive}" -o "$archive"
-          tar xf "$archive"
+          # Install the zola package from the alpine community repositories
+          apk add --update-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/community/ zola
 
       - name: Build
         run: |
